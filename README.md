@@ -1,12 +1,11 @@
-
-<H3>RASIKA M</H3>
-<H3>212222230117</H3>
-<H3>EX. NO.4</H3>
-<H3>DATE:</H3>
+<H3>Name: RASIKA M</H3>
+<H3>Register no: 212222230117</H3>
+<H3>Ex.No-4</H3>
+<!-- <H3>DATE:</H3> -->
 <H1 ALIGN =CENTER>Implementation of MLP with Backpropagation for Multiclassification</H1>
 <H3>Aim:</H3>
 To implement a Multilayer Perceptron for Multi classification
-<H3>Theory:</H3>
+<H3>Theory</H3>
 
 A multilayer perceptron (MLP) is a feedforward artificial neural network that generates a set of outputs from a set of inputs. An MLP is characterized by several layers of input nodes connected as a directed graph between the input and output layers. MLP uses back propagation for training the network. MLP is a deep learning method.
 A multilayer perceptron is a neural network connecting multiple layers in a directed graph, which means that the signal path through the nodes only goes one way. Each node, apart from the input nodes, has a nonlinear activation function. An MLP uses backpropagation as a supervised learning technique.
@@ -97,126 +96,93 @@ In the backward pass,
 
 <H3>Algorithm:</H3>
 
-1. Import the necessary libraries of python.
+#### step 1:
+Import the necessary libraries of python.
 
-2. After that, create a list of attribute names in the dataset and use it in a call to the read_csv() function of the pandas library along with the name of the CSV file containing the dataset.
+#### step 2:
+After that, create a list of attribute names in the dataset and use it in a call to the read_csv() function of the pandas library along with the name of the CSV file containing the dataset.
 
-3. Divide the dataset into two parts. While the first part contains the first four columns that we assign in the variable x. Likewise, the second part contains only the last column that is the class label. Further, assign it to the variable y.
+#### step 3: 
+Divide the dataset into two parts. While the first part contains the first four columns that we assign in the variable x. Likewise, the second part contains only the last column that is the class label. Further, assign it to the variable y.
 
-4. Call the train_test_split() function that further divides the dataset into training data and testing data with a testing data size of 20%.
+#### step 4: 
+Call the train_test_split() function that further divides the dataset into training data and testing data with a testing data size of 20%.
 Normalize our dataset. 
 
-5. In order to do that we call the StandardScaler() function. Basically, the StandardScaler() function subtracts the mean from a feature and scales it to the unit variance.
+#### step 5: 
+In order to do that we call the StandardScaler() function. Basically, the StandardScaler() function subtracts the mean from a feature and scales it to the unit variance.
 
-6. Invoke the MLPClassifier() function with appropriate parameters indicating the hidden layer sizes, activation function, and the maximum number of iterations.
+#### step 6: 
+Invoke the MLPClassifier() function with appropriate parameters indicating the hidden layer sizes, activation function, and the maximum number of iterations.
 
-7. In order to get the predicted values we call the predict() function on the testing data set.
+#### step 7:
+In order to get the predicted values we call the predict() function on the testing data set.
 
-8. Finally, call the functions confusion_matrix(), and the classification_report() in order to evaluate the performance of our classifier.
+#### step 8:
+Finally, call the functions confusion_matrix(), and the classification_report() in order to evaluate the performance of our classifier.
 
 <H3>Program:</H3> 
 
-
-```
+```py
 import pandas as pd
+import sklearn
+from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPClassifier
-from sklearn.metrics import confusion_matrix, classification_report
-df=pd.read_csv('heart.csv')
-df
-X = df.iloc[:, 0:13]  
-y = df.iloc[:, 13] 
-X
-y
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
+from sklearn.metrics import classification_report, confusion_matrix
+url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'Class']
+irisdata = pd.read_csv(url, names=names)
+X = irisdata.iloc[:, 0:4]
+y = irisdata.select_dtypes(include=[object])
+X.head()
+y.head()
+y.Class.unique()
+le = preprocessing.LabelEncoder()
+y = y.apply(le.fit_transform)
+y.head()
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20)
 scaler = StandardScaler()
 scaler.fit(X_train)
 X_train = scaler.transform(X_train)
 X_test = scaler.transform(X_test)
-mlp = MLPClassifier(hidden_layer_sizes=(12, 13, 14), activation='relu', solver='adam', max_iter=2000, random_state=42)
-mlp.fit(X_train, y_train)
+mlp = MLPClassifier(hidden_layer_sizes=(10, 10, 10), max_iter=1000)
+mlp.fit(X_train, y_train.values.ravel())
 predictions = mlp.predict(X_test)
-print("\nPredictions:")
 print(predictions)
-print("\nConfusion Matrix:")
-print(confusion_matrix(y_test, predictions))
-print("\nClassification Report:")
-print(classification_report(y_test, predictions))
-
-df1=pd.read_csv('heart.csv')
-df1
-a=df1.iloc[:,0:13]
-b=df1.iloc[:,13:14]
-a.head()
-b.tail()
-a_train,a_test,b_train,b_test=train_test_split(a,b,test_size=0.25,random_state=42)
-scaler=StandardScaler()
-scaler.fit(a_train)
-a_train = scaler.transform(a_train)
-a_test = scaler.transform(a_test)
-m1 = MLPClassifier(hidden_layer_sizes=(12, 13, 14), activation='relu', solver='adam', max_iter=2500, random_state=42)
-m1.fit(a_train, b_train.values.ravel())
-predicted_values = m1.predict(a_test)
-print("\nPredicted Values:")
-print(predicted_values)
-print("\nConfusion Matrix:")
-print(confusion_matrix(b_test, predicted_values))
-print("\nClassification Report:")
-print(classification_report(b_test, predicted_values))
-
+print(confusion_matrix(y_test,predictions))
+print(classification_report(y_test,predictions))
+url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+arr = ['SepalLength', 'SepalWidth', 'PetalLength', 'PetalWidth', 'Species']
+df = pd.read_csv(url, names=arr)
+print(df.head())
+a = df.iloc[:, 0:4]
+b = df.select_dtypes(include=[object])
+b = df.iloc[:,4:5]
+training_a, testing_a, training_b, testing_b = train_test_split(a, b, test_size = 0.25)
+myscaler = StandardScaler()
+myscaler.fit(training_a)
+training_a = myscaler.transform(training_a)
+testing_a = myscaler.transform(testing_a)
+m1 = MLPClassifier(hidden_layer_sizes=(12, 13, 14), activation='relu', solver='adam', max_iter=2500)
+m1.fit(training_a, training_b.values.ravel())
+predicted_values = m1.predict(testing_a)
+print(confusion_matrix(testing_b,predicted_values))
+print(classification_report(testing_b,predicted_values))
 ```
 
+### Output:
+#### variables
+![image](https://github.com/user-attachments/assets/bb1f053f-6d75-4a33-bdf3-0bc929280b7c)
 
-<H3>Output:</H3>
+#### label encoded
+![image](https://github.com/user-attachments/assets/37ddaa27-5b5b-4144-98a3-30481b45c90e)
 
-### Splits training and testing data as 80-20
-
-#### Heart Dataset
-
-<img width="1001" height="556" alt="Screenshot 2025-10-04 192723" src="https://github.com/user-attachments/assets/a44733df-a59a-4ff3-ac52-80f35133e764" />
-
-#### X 
-
-<img width="931" height="556" alt="Screenshot 2025-10-04 192740" src="https://github.com/user-attachments/assets/682ee506-ee38-4420-b850-560b5e36e7cf" />
-
-#### Y
-
-<img width="931" height="556" alt="Screenshot 2025-10-04 192740" src="https://github.com/user-attachments/assets/86580931-afe9-4910-b51a-bff65df7fbca" />
-
-#### Predicted Values
-
-<img width="948" height="236" alt="Screenshot 2025-10-04 192803" src="https://github.com/user-attachments/assets/76910344-cdf3-43c1-ab88-d6742d376a24" />
-
-#### Confusion Matrix
-
-<img width="345" height="140" alt="Screenshot 2025-10-04 192811" src="https://github.com/user-attachments/assets/d9b2729c-50e2-4aa0-bda3-b0a7dcd81a89" />
-
-#### Classification Report
-
-<img width="749" height="324" alt="Screenshot 2025-10-04 192820" src="https://github.com/user-attachments/assets/9e8aa8f8-962e-434c-b7a7-c64a4af6122a" />
-
-### Splits training and testing data as 75-25
-#### Heart Dataset
-
-<img width="1031" height="550" alt="Screenshot 2025-10-04 193508" src="https://github.com/user-attachments/assets/d91cbfd7-e0e4-48ee-81f1-fe917c0e10d5" />
-
-<img width="917" height="336" alt="Screenshot 2025-10-04 193532" src="https://github.com/user-attachments/assets/1372644d-8279-4330-bb36-0d88b46f1772" />
-
-<img width="513" height="328" alt="Screenshot 2025-10-04 193546" src="https://github.com/user-attachments/assets/9a5e0463-a787-4dce-8405-af3b54c63892" />
-
-#### Predicted Values
-
-<img width="993" height="262" alt="Screenshot 2025-10-04 193601" src="https://github.com/user-attachments/assets/75f0dbfb-118d-4b5d-89f1-aff3b8511704" />
-
-#### Confusion Matrix
-<img width="283" height="144" alt="Screenshot 2025-10-04 193614" src="https://github.com/user-attachments/assets/62f2337a-2d4e-43ef-80c8-b1ac6bb0974b" />
-
-#### Classification Report
-
-<img width="763" height="320" alt="Screenshot 2025-10-04 193623" src="https://github.com/user-attachments/assets/cecce9bc-a5cb-4cc2-8011-5b443ee087c8" />
+#### final analysis
+![image](https://github.com/user-attachments/assets/f3393527-c301-42bf-b0fd-4d8f98a47808)
+![image](https://github.com/user-attachments/assets/c845f38c-69c6-4a5a-a6d4-cb44441f3b4c)
 
 
 <H3>Result:</H3>
-
 Thus, MLP is implemented for multi-classification using python.
