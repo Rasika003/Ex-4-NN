@@ -1,7 +1,8 @@
-<H3>Name: RASIKA M</H3>
-<H3>Register no: 212222230117</H3>
-<H3>Ex.No-4</H3>
-<!-- <H3>DATE:</H3> -->
+
+<H3>ENTER YOUR NAME : RASIKA M</H3>
+<H3>ENTER YOUR REGISTER NO: 212222230117</H3>
+<H3>EX. NO.4</H3>
+<H3>DATE:17-10-2025</H3>
 <H1 ALIGN =CENTER>Implementation of MLP with Backpropagation for Multiclassification</H1>
 <H3>Aim:</H3>
 To implement a Multilayer Perceptron for Multi classification
@@ -96,34 +97,27 @@ In the backward pass,
 
 <H3>Algorithm:</H3>
 
-#### step 1:
-Import the necessary libraries of python.
+1. Import the necessary libraries of python.
 
-#### step 2:
-After that, create a list of attribute names in the dataset and use it in a call to the read_csv() function of the pandas library along with the name of the CSV file containing the dataset.
+2. After that, create a list of attribute names in the dataset and use it in a call to the read_csv() function of the pandas library along with the name of the CSV file containing the dataset.
 
-#### step 3: 
-Divide the dataset into two parts. While the first part contains the first four columns that we assign in the variable x. Likewise, the second part contains only the last column that is the class label. Further, assign it to the variable y.
+3. Divide the dataset into two parts. While the first part contains the first four columns that we assign in the variable x. Likewise, the second part contains only the last column that is the class label. Further, assign it to the variable y.
 
-#### step 4: 
-Call the train_test_split() function that further divides the dataset into training data and testing data with a testing data size of 20%.
+4. Call the train_test_split() function that further divides the dataset into training data and testing data with a testing data size of 20%.
 Normalize our dataset. 
 
-#### step 5: 
-In order to do that we call the StandardScaler() function. Basically, the StandardScaler() function subtracts the mean from a feature and scales it to the unit variance.
+5. In order to do that we call the StandardScaler() function. Basically, the StandardScaler() function subtracts the mean from a feature and scales it to the unit variance.
 
-#### step 6: 
-Invoke the MLPClassifier() function with appropriate parameters indicating the hidden layer sizes, activation function, and the maximum number of iterations.
+6. Invoke the MLPClassifier() function with appropriate parameters indicating the hidden layer sizes, activation function, and the maximum number of iterations.
 
-#### step 7:
-In order to get the predicted values we call the predict() function on the testing data set.
+7. In order to get the predicted values we call the predict() function on the testing data set.
 
-#### step 8:
-Finally, call the functions confusion_matrix(), and the classification_report() in order to evaluate the performance of our classifier.
+8. Finally, call the functions confusion_matrix(), and the classification_report() in order to evaluate the performance of our classifier.
 
 <H3>Program:</H3> 
 
-```py
+```PYTHON
+
 import pandas as pd
 import sklearn
 from sklearn import preprocessing
@@ -131,17 +125,23 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import classification_report, confusion_matrix
+
 url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
 names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'Class']
 irisdata = pd.read_csv(url, names=names)
+
 X = irisdata.iloc[:, 0:4]
+
 y = irisdata.select_dtypes(include=[object])
 X.head()
 y.head()
+
 y.Class.unique()
+
 le = preprocessing.LabelEncoder()
 y = y.apply(le.fit_transform)
 y.head()
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20)
 scaler = StandardScaler()
 scaler.fit(X_train)
@@ -153,6 +153,22 @@ predictions = mlp.predict(X_test)
 print(predictions)
 print(confusion_matrix(y_test,predictions))
 print(classification_report(y_test,predictions))
+```
+<H3>Output:</H3>
+
+<img width="822" height="329" alt="image" src="https://github.com/user-attachments/assets/edab4965-009d-464f-97e4-890c403eb80c" />
+
+
+
+<H3>Program:</H3>
+
+```PYTHON
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
 url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
 arr = ['SepalLength', 'SepalWidth', 'PetalLength', 'PetalWidth', 'Species']
 df = pd.read_csv(url, names=arr)
@@ -171,17 +187,8 @@ predicted_values = m1.predict(testing_a)
 print(confusion_matrix(testing_b,predicted_values))
 print(classification_report(testing_b,predicted_values))
 ```
-
-### Output:
-#### variables
-![image](https://github.com/user-attachments/assets/bb1f053f-6d75-4a33-bdf3-0bc929280b7c)
-
-#### label encoded
-![image](https://github.com/user-attachments/assets/37ddaa27-5b5b-4144-98a3-30481b45c90e)
-
-#### final analysis
-![image](https://github.com/user-attachments/assets/f3393527-c301-42bf-b0fd-4d8f98a47808)
-![image](https://github.com/user-attachments/assets/c845f38c-69c6-4a5a-a6d4-cb44441f3b4c)
+<H3>Output:</H3>
+<img width="825" height="436" alt="image" src="https://github.com/user-attachments/assets/42969c1a-82e9-488f-b6a7-c2e976d2d92b" />
 
 
 <H3>Result:</H3>
